@@ -36,4 +36,4 @@ clean:
 #	cd ${FIGS} && ${MAKE} clean
 
 clean2:
-	${MAKE} clean && rm -rf ${DOC}.pdf
+	${MAKE} clean && rm -f ${DOC}.pdf

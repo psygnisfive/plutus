@@ -792,8 +792,12 @@
 % creates the second title. It will be ignored for other modes.
 \IEEEpeerreviewmaketitle
 
+\nocite{*} % Add all bib entries anyway
 
-
+%% kwxm: macros for notes
+\usepackage{xcolor}
+\newcommand{\red}[1]{\textcolor{red}{#1}}
+\newcommand{\redfootnote}[1]{\red{\footnote{\red{#1}}}}
 
 \section{Plutus Core}
 
@@ -849,10 +853,51 @@ ought to be included as sugar.
 
 \subfile{figures/PlutusCoreLexicalGrammar}
 
+\subsection{Remarks}
+\begin{itemize}
+\item
+Integers are signed values: there is no fixed upper bound, but values
+are represented as sequences of 8-bit bytes.  For example, \texttt{1 !
+  100} is an 8-bit value.  Literal constants must fit into the
+specified size: \texttt{1 ! 200} gives a compile-time error. (parse,
+typecheck?).  If a value overflows at runtime then an error occurs and
+execution is terminated.  Integers are manipulated using built-in
+functions (see fig 13) whose types include the size. This prevents 
+users from writing programs which generate arbitrarily large values
+during execution, which would be undesirable in a blockchain system;
+it also allows us to charge according to the actual amount of computation 
+performed, which will increase as the size of the integers involved increases.
+\item Bytestrings are blocks of binary data used for cryptographic 
+purposes.  Sizes of bytestrings are tracked in the type system in the 
+same way as for integers.
+\end{itemize}
+
+
 \subfile{figures/PlutusCoreGrammar}
 
-
-
+\subsection{Remarks}
+\begin{itemize}
+\item
+$\lam{x}{S}{M}$ denotes standard $\lambda$-abstraction for 
+terms: $\lambda x:S.M$\,.
+\item
+$\abs{\alpha}{K}{V}$ represents polymorphic abstraction of
+values over types, $\Lambda \alpha:K.V$.  Note that abstraction
+is only permitted for \textit{values}, not arbitrary terms.
+This is analogous to the value restriction in ML.  EXAMPLE?
+\item
+$\lamT{\alpha}{K}{A}$ denotes $\lambda$-abstraction at the type 
+level: $\lambda \alpha:K.A$\,.
+\item \texttt{wrap} and \texttt{unwrap}.
+\item Type normalisation.
+\item What about \texttt{error}?
+\item There is no direct support for algebraic data types.  These 
+must be represented by some suitable encoding. The Scott encoding [?]
+is a suitable choice here since it permits more efficient computation
+than the standard Church encoding.
+\item Recursion (in both computations and types) is achieved using 
+the \texttt{fix} combinators.
+\end{itemize}
 
 
 % As an example, consider the program in Figure \ref{fig:Plutus_core_example}, which defines the type of natural numbers as well as lists, and the factorial and map functions. This program is not the most readable, which is to be expected from a representation intended for machine interpretation rather than human interpretation, but it does make explicit precisely what the roles are of the various parts.
@@ -946,8 +991,8 @@ TO WRITE
 
 
 
-
-
+\bibliographystyle{plain}
+\bibliography{main}
 
 
 
