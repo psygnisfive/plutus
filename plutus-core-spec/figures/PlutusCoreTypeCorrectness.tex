@@ -57,17 +57,18 @@
     \begin{prooftree}
         \AxiomC{\(\validJ{\Gamma}\)}
         \AxiomC{$\alpha$ is free in $\Gamma$}
-        \BinaryInfC{\(\Gamma, \typeJ{\alpha}{K}\)}
+        \BinaryInfC{\(\validJ{\Gamma, \typeJ{\alpha}{K}}\)}
     \end{prooftree}
     
     \begin{prooftree}
         \AxiomC{\(\validJ{\Gamma}\)}
         \AxiomC{$x$ is free in $\Gamma$}
         \AxiomC{\(\hypJ{\Gamma}{\istypeJ{A}{\typeK{}}}\)}
-        \TrinaryInfC{\(\Gamma, \termJ{x}{A}\)}
+        \TrinaryInfC{\(\validJ{\Gamma, \termJ{x}{A}}\)}
     \end{prooftree}
     
-    
+    \red{Do we even need validity? It should follow from the typing rules that all contexts are valid (maybe we want to \textit{prove} this)}.
+
     \caption{Contexts}
     \label{fig:Plutus_core_contexts}
 \end{figure*}
